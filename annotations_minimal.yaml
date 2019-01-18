@@ -1,0 +1,10 @@
+!!python/object/new:annotation_manager.AnnotationManagerSerializeable
+- - !!python/object/new:annotation_manager.AnnotationSerializeable
+    - -1
+    - -1
+    - !!python/object/apply:collections.OrderedDict
+      - - - 1524039655915878407
+          - - [1.9542039346349194, 2.1586225166883444, 2.597982546839896]
+            - [0.8008518714888215, 0.41506172040638434, 1.1250554345897759]
+            - [0.0, 0.0, 0.0]
+            - [1.0, 1.0, 1.0]
