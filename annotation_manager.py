@@ -149,7 +149,7 @@ class AnnotationManager:
             yaml.dump(s_annotation_manager, f)
         pass
 
-    def load(self,yaml_path):
+    def load(self, yaml_path):
         #todo: load it with yaml and fill the necessary containers
         with open(yaml_path) as f:
             loaded = yaml.load(f)
@@ -178,7 +178,7 @@ class AnnotationManager:
         p = pos - v* (pos[2]/v[2])
         return p
 
-    def click(self,event, x, y, flags, param):
+    def click(self, event, x, y, flags, param):
         color_with_markings = self.color_image.copy()
         #index_image = np.zeros((480,640),np.int32)
         unused, index_image = self.render_annotations(color_with_markings,flags & cv2.EVENT_FLAG_SHIFTKEY)
@@ -230,7 +230,7 @@ class AnnotationManager:
                             clicked_vertex = True
                             print("editing vertex position")
                 if not clicked_vertex:
-                    index = index_image[y,x]
+                    index = index_image[y, x]
                     if index-1 == self.current_annotation_ind:
                         self.mode = Mode.Edit_Move
                         self.initial_move_point = self.pix_to_global(x, y, self.pose)
@@ -282,7 +282,7 @@ class AnnotationManager:
 
         color_with_markings,index_image = self.render_annotations(color_with_markings,flags & cv2.EVENT_FLAG_SHIFTKEY)
         cv2.imshow("color", color_with_markings)
-        cv2.imshow("annotations", index_image*10000)
+        #cv2.imshow("annotations", index_image*10000)
 
 
     def set_images(self, image,point_image,pose,stamp):
@@ -299,7 +299,7 @@ class AnnotationManager:
         self.pose_ = np.linalg.inv(self.pose)
         self.stamp = stamp#key_from_stamp(stamp)
 
-    def render_annotations(self,color_image,suppress_circles = False):
+    def render_annotations(self, color_image, suppress_circles = False):
         annotation_image = np.zeros((480,640),np.int32)
         color_with_markings = color_image.copy()
         self.render_existing_annotations(color_with_markings,annotation_image)
