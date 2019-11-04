@@ -25,7 +25,7 @@ parser.add_argument('--output', type=str, required=False,
 parser.add_argument('--use_depth', type=bool, default=True,
                     help='Use the depth values to fit a plane. If not the x,y plane is assumed.')
 parser.add_argument('--annotation_file', type=str, required=False,
-                    default='annotations_carugate.yaml',
+                    default='annotations/annotations_carugate.yaml',
                     help='File to load annotations. Upon pressing p it stores all changes to this file.')
 
 opt = parser.parse_args()
@@ -37,10 +37,11 @@ bag_in = rosbag.Bag(opt.input, 'r')
 render_results_to_bag = False
 render_results_to_folder = False
 if hasattr(opt, 'output'):
-    if opt.output.endswith('.bag'):
-        render_results_to_bag = True
-    else:
-        render_results_to_folder = True
+    if opt.output:
+        if opt.output.endswith('.bag'):
+            render_results_to_bag = True
+        else:
+            render_results_to_folder = True
 
 
 
@@ -97,7 +98,7 @@ def generate_new_rosbag(bag_out_path , bag_in, annotator):
 
             img = bridge.cv2_to_imgmsg(mat, 'passthrough')
             img.header.stamp = stamp
-            bag_out.write('/camera/dirt_mask',img,t)#stamp)
+            bag_out.write('/camera/dirt_mask', img, t)#stamp)
             #https://answers.ros.org/question/11537/creating-a-bag-file-out-of-a-image-sequence/
             pass
     pass
@@ -214,7 +215,7 @@ messageBuffer.append((msg,t))
 
 
 
-#cv2.namedWindow("color")
+cv2.namedWindow("color")
 
 annotator = AnnotationManager("color")
 
@@ -283,7 +284,7 @@ while running:
         annotator.delete_current_selection()
         pass
     elif key == 112: #p
-        annotator.store(opt.annotation_path)
+        annotator.store(opt.annotation_file)
         pass
     elif key == 101: #e
         #todo: end the current annotation from this timeframe on

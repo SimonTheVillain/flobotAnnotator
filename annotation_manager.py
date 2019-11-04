@@ -179,6 +179,7 @@ class AnnotationManager:
         return p
 
     def click(self, event, x, y, flags, param):
+        print('click')
         color_with_markings = self.color_image.copy()
         #index_image = np.zeros((480,640),np.int32)
         unused, index_image = self.render_annotations(color_with_markings,flags & cv2.EVENT_FLAG_SHIFTKEY)
